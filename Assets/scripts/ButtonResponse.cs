@@ -4,10 +4,10 @@ public class ButtonResponse : MonoBehaviour
 {
     Animator anim;
 
-    bool up;
-    bool down;
-    bool left;
-    bool right;
+    bool up = false;
+    bool down = false;
+    bool left = false;
+    bool right = false;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -16,10 +16,9 @@ public class ButtonResponse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (up == true)
-        {
-            anim.Play("up button anim");
-        }
+        
+
+        
 
         if (down == true)
         {
@@ -30,7 +29,19 @@ public class ButtonResponse : MonoBehaviour
     public void ClickUp()
     {
         up = true;
-        
+        if (up == true)
+        {
+            anim.Play("up button anim");
+        }
+    }
+
+    public void NoClickUp()
+    {
+        up = false;
+        if (up == false)
+        {
+            anim.Play("up button idle");
+        }
     }
 
     public void ClickDown()
