@@ -5,7 +5,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sprite;
-
+    public GameObject speedPowerup;
 
     bool upHeld = false;
     bool downHeld = false;
@@ -14,6 +14,12 @@ public class PlayerScript : MonoBehaviour
 
     public int facingDirection;
     float speed = 5;
+
+    public GameObject bomb;
+
+    public int maxNumBomb = 1;
+    public int bombNum = 1;
+
 
     private void Start()
     {
@@ -25,7 +31,12 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        
+        print(bombNum);
+
+        if (bombNum == 0)
+        {
+            //delay into bomb added back
+        }
 
         if (rightHeld == true)
         {
@@ -59,6 +70,15 @@ public class PlayerScript : MonoBehaviour
             facingDirection = 4;
             anim.Play("walk down");
             
+        }
+    }
+
+    public void DropBomb()
+    {
+        if (bombNum > 0)
+        {
+            bombNum = bombNum - 1;
+            print("drop bomb");
         }
     }
 
@@ -126,6 +146,16 @@ public class PlayerScript : MonoBehaviour
             }
         }
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject == speedPowerup)
+        {
+            print("go fast");
+            speed = speed * 1.5f;
+            Destroy(speedPowerup);
+        }
     }
 
 }
