@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -6,23 +7,32 @@ public class PlayerScript : MonoBehaviour
     private Animator anim;
     private SpriteRenderer sprite;
     public GameObject speedPowerup;
+    public GameObject bombPrefab;
+
+    public int maxNumBomb = 1;
+    public int bombNum = 1;
+    private int bombsRemaining;
+
 
     bool upHeld = false;
     bool downHeld = false;
     bool leftHeld = false;
     bool rightHeld = false;
 
+    public float delay = 2f;
+
     public int facingDirection;
     float speed = 5;
 
-    public GameObject bomb;
+   
 
-    public int maxNumBomb = 1;
-    public int bombNum = 1;
+    
 
 
     private void Start()
     {
+        bombsRemaining = bombNum;
+
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
@@ -31,11 +41,22 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        print(bombNum);
-
+        if(!rightHeld || !leftHeld || !downHeld || !upHeld)
+        {
+            Vector2 position = transform.position;
+            position.x = Mathf.Round(position.x);
+            position.y = Mathf.Round(position.y);
+        }
+       
         if (bombNum == 0)
         {
-            //delay into bomb added back
+            delay -= Time.deltaTime;
+
+            if (delay < 0)
+            {
+                bombNum = maxNumBomb;
+                delay = 2f;
+            }
         }
 
         if (rightHeld == true)
@@ -73,11 +94,22 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void DropBomb()
+   public void DropBomb()
     {
         if (bombNum > 0)
         {
+            Vector2 position = transform.position;
+            position.x = Mathf.Round(position.x);
+            position.y = Mathf.Round(position.y);
+
+            GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
+
             bombNum = bombNum - 1;
+
+
+
+
+
             print("drop bomb");
         }
     }
@@ -85,6 +117,7 @@ public class PlayerScript : MonoBehaviour
     public void MovePlayerRight()
     { 
         rightHeld = true;
+
         
 
 
@@ -93,7 +126,12 @@ public class PlayerScript : MonoBehaviour
     public void MovePlayerLeft()
     {
         leftHeld = true;
-        
+        /*if( moving==false)
+        {
+            //calculate dest
+
+            moving = true;
+        }*/
 
 
     }
