@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -24,9 +25,14 @@ public class PlayerScript : MonoBehaviour
     public int facingDirection;
     float speed = 5;
 
-   
+    public bool isMoving;
 
-    
+    float positionX;
+    float positionY;
+    float destX;
+    float destY;
+
+
 
 
     private void Start()
@@ -41,13 +47,10 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        if(!rightHeld || !leftHeld || !downHeld || !upHeld)
-        {
-            Vector2 position = transform.position;
-            position.x = Mathf.Round(position.x);
-            position.y = Mathf.Round(position.y);
-        }
-       
+        isMoving = false;
+
+        
+
         if (bombNum == 0)
         {
             delay -= Time.deltaTime;
@@ -61,25 +64,42 @@ public class PlayerScript : MonoBehaviour
 
         if (rightHeld == true)
         {
+            
             rb.linearVelocity = new Vector2(speed, 0);
             facingDirection = 1;
             anim.Play("walk side");
-            
+
+            positionX = transform.position.x;
+            positionY = transform.position.y;
+
+            destX = positionX + 1f;
+            destY = positionY + 1f;
+
+            if (rightHeld == false)
+            {
+
+                print("magnet");
+                positionX = destX;
+                
+                //calculate dest
+                
+                //isMoving = true;
+            }
         }
 
         if (leftHeld == true)
         {
+            isMoving = true;
             rb.linearVelocity = new Vector2(-speed, 0);
             facingDirection = 2;
             anim.Play("walk left");
-
-
         }
 
         
 
         if (upHeld == true)
         {
+            isMoving = true;
             rb.linearVelocity = new Vector2(0, speed);
             facingDirection = 3;
             anim.Play("up walk");
@@ -87,10 +107,10 @@ public class PlayerScript : MonoBehaviour
 
         if (downHeld == true)
         {
+            isMoving = true;
             rb.linearVelocity = new Vector2(0, -speed);
             facingDirection = 4;
             anim.Play("walk down");
-            
         }
     }
 
@@ -126,12 +146,7 @@ public class PlayerScript : MonoBehaviour
     public void MovePlayerLeft()
     {
         leftHeld = true;
-        /*if( moving==false)
-        {
-            //calculate dest
-
-            moving = true;
-        }*/
+        
 
 
     }
