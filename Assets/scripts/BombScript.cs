@@ -21,6 +21,8 @@ public class BombScript : MonoBehaviour
 
             explosionTime = 4f;
             Destroy(gameObject);
+
+            
         }
     }
 }

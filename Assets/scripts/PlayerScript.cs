@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -9,16 +7,16 @@ public class PlayerScript : MonoBehaviour
     private SpriteRenderer sprite;
     public GameObject speedPowerup;
     public GameObject bombPrefab;
+    public GameObject destSprite;
 
     public int maxNumBomb = 1;
     public int bombNum = 1;
-    private int bombsRemaining;
 
 
-    bool upHeld = false;
-    bool downHeld = false;
-    bool leftHeld = false;
-    bool rightHeld = false;
+    public bool upHeld = false;
+    public bool downHeld = false;
+    public bool leftHeld = false;
+    public bool rightHeld = false;
 
     public float delay = 2f;
 
@@ -32,21 +30,29 @@ public class PlayerScript : MonoBehaviour
     float destX;
     float destY;
 
+    
+
 
 
 
     private void Start()
     {
-        bombsRemaining = bombNum;
+        
 
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+
+        float tx = 2.0f;
+        print("tx=" + tx + "  rounded=" + Mathf.Ceil(tx));
         
     }
 
     private void Update()
     {
+
+       
+
         isMoving = false;
 
         
@@ -64,27 +70,29 @@ public class PlayerScript : MonoBehaviour
 
         if (rightHeld == true)
         {
-            
+            isMoving = true;
             rb.linearVelocity = new Vector2(speed, 0);
             facingDirection = 1;
             anim.Play("walk side");
 
             positionX = transform.position.x;
-            positionY = transform.position.y;
+            
 
-            destX = positionX + 1f;
-            destY = positionY + 1f;
+            destX = Mathf.Round(positionX);
+            
 
-            if (rightHeld == false)
-            {
+            
+        }
 
-                print("magnet");
-                positionX = destX;
-                
-                //calculate dest
-                
-                //isMoving = true;
-            }
+        if (rightHeld == false && positionX < destX)
+        {
+
+            print("magnet");
+            positionX = destX;
+            transform.position = new Vector3(positionX + 0.5f, transform.position.y);
+
+            
+
         }
 
         if (leftHeld == true)
@@ -93,6 +101,17 @@ public class PlayerScript : MonoBehaviour
             rb.linearVelocity = new Vector2(-speed, 0);
             facingDirection = 2;
             anim.Play("walk left");
+
+            positionX = transform.position.x;
+
+
+            destX = Mathf.Round(positionX);
+        }
+
+        if (leftHeld == false && positionX > destX)
+        {
+            positionX = destX;
+            transform.position = new Vector3(positionX - 0.5f,  transform.position.y);
         }
 
         
@@ -103,6 +122,17 @@ public class PlayerScript : MonoBehaviour
             rb.linearVelocity = new Vector2(0, speed);
             facingDirection = 3;
             anim.Play("up walk");
+
+            positionY = transform.position.y;
+
+
+            destY = Mathf.Round(positionY);
+        }
+
+        if (upHeld == false)
+        {
+            positionY = destY;
+            transform.position = new Vector3(transform.position.x, positionY + 0.5f);
         }
 
         if (downHeld == true)
@@ -210,6 +240,7 @@ public class PlayerScript : MonoBehaviour
             Destroy(speedPowerup);
         }
     }
+        
 
 }
 

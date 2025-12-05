@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3398340010339388079}
   - component: {fileID: 2194142889912470349}
   - component: {fileID: -6039262694799857257}
+  - component: {fileID: 8372578744719742035}
   m_Layer: 0
   m_Name: explosion temp
   m_TagString: Untagged
@@ -137,3 +138,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8372578744719742035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386658737430923751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29204b7c4552a54dbb04f7f6539916a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Explosion
