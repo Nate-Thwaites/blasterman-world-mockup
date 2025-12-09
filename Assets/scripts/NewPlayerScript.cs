@@ -5,6 +5,7 @@ public class NewPlayerScript : MonoBehaviour
     public float moveSpeed = 5f;
     public Transform movePoint;
     PlayerScript ps;
+    private Animator anim;
 
     public GameObject bombPrefab;
 
@@ -13,6 +14,10 @@ public class NewPlayerScript : MonoBehaviour
     public int maxNumBomb = 1;
     public int bombNum = 1;
 
+    public int facingDirection;
+
+    
+
     public float delay = 2f;
 
     void Start()
@@ -20,6 +25,7 @@ public class NewPlayerScript : MonoBehaviour
         movePoint.parent = null;
 
         ps = GetComponent<PlayerScript>();
+        anim = GetComponent<Animator>();
 
     }
 
@@ -37,34 +43,45 @@ public class NewPlayerScript : MonoBehaviour
             }
         }
 
+        
 
-
-        print("l=" + ps.leftHeld + " r=" + ps.rightHeld);
+        
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if( ps.leftHeld )
+        if(ps.leftHeld )
         {
+            facingDirection = 1;
             h = -1;
+            anim.Play("walk left");
         }
+
+        
+
         if (ps.rightHeld)
         {
+            facingDirection = 2;
             h = 1;
+            anim.Play("walk side");
         }
 
         if (ps.upHeld)
         {
+            facingDirection = 3;
             v = 1;
+            anim.Play("up walk");
         }
+
         if (ps.downHeld)
         {
+           facingDirection= 4;
             v = -1;
+            anim.Play("walk down");
         }
 
-
-        print("h=" + h);
-
+        
+        
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, movePoint.position) <= 0.1f)
@@ -76,6 +93,7 @@ public class NewPlayerScript : MonoBehaviour
             {
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3( h, 0f, 0f), 0.2f, wall))
                 {
+                    FindObjectOfType<AudioManager>().Play("walk");
                     movePoint.position += new Vector3(h, 0f, 0f);
                 }
             } 
@@ -84,11 +102,13 @@ public class NewPlayerScript : MonoBehaviour
             {
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, v, 0f), 0.2f, wall))
                 {
+                    FindObjectOfType<AudioManager>().Play("walk");
                     movePoint.position += new Vector3(0f, v, 0f);
                 }
 
             }
 
+           
         }
     }
     public void DropBomb()
@@ -104,10 +124,47 @@ public class NewPlayerScript : MonoBehaviour
             bombNum = bombNum - 1;
 
 
-
+            FindObjectOfType<AudioManager>().Play("bomb place");
 
 
             print("drop bomb");
         }
+    }
+
+    public void StopMoving()
+    {
+        ps.upHeld = false;
+        ps.downHeld = false;
+        ps.leftHeld = false;
+        ps.rightHeld = false;
+
+
+        if (ps.upHeld == false && ps.downHeld == false && ps.leftHeld == false && ps.rightHeld == false)
+        {
+            
+
+
+            if (facingDirection == 4)
+            {
+                anim.Play("idle");
+            }
+
+            if (facingDirection == 3)
+            {
+                anim.Play("up idle");
+            }
+
+            if (facingDirection == 2)
+            {
+                anim.Play("side idle");
+            }
+
+            if (facingDirection == 1)
+            {
+                anim.Play("left idle");
+
+            }
+        }
+
     }
 }

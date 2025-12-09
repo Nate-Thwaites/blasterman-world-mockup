@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class BombScript : MonoBehaviour
 {
     public float explosionTime = 4f;
+   
 
+    
     
     void Start()
     {
@@ -19,10 +22,15 @@ public class BombScript : MonoBehaviour
         {
             print("explode");
 
+            
+            
+
             explosionTime = 4f;
             Destroy(gameObject);
 
             
         }
     }
+
+    
 }

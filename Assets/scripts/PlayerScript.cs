@@ -152,6 +152,8 @@ public class PlayerScript : MonoBehaviour
             position.x = Mathf.Round(position.x);
             position.y = Mathf.Round(position.y);
 
+            
+
             GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
 
             bombNum = bombNum - 1;
@@ -205,7 +207,7 @@ public class PlayerScript : MonoBehaviour
 
         if (upHeld == false || downHeld == false || leftHeld == false || rightHeld == false)
         {
-            rb.linearVelocity = new Vector2(0, 0);
+            
 
             if (facingDirection == 4)
             {

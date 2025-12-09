@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombScript
   explosionTime: 4
+  explosionBeam: {fileID: 386658737430923751, guid: 5b9e6c8be390d4d4182c13176ee4e08b, type: 3}
 --- !u!82 &6639336806555532067
 AudioSource:
   m_ObjectHideFlags: 0
