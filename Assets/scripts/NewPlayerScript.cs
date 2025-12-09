@@ -116,8 +116,8 @@ public class NewPlayerScript : MonoBehaviour
         if (bombNum > 0)
         {
             Vector2 position = transform.position;
-            position.x = Mathf.Round(position.x);
-            position.y = Mathf.Round(position.y);
+            //position.x = Mathf.Round(position.x);
+            //position.y = Mathf.Round(position.y);
 
             GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
 
