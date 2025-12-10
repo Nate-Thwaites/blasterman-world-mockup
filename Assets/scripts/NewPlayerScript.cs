@@ -1,4 +1,6 @@
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NewPlayerScript : MonoBehaviour
 {
@@ -9,6 +11,20 @@ public class NewPlayerScript : MonoBehaviour
 
     public GameObject bombPrefab;
 
+    public GameObject flame;
+    public GameObject flameEndUp;
+    public GameObject speedPowerup;
+    
+    public float deathCountdown = 5f;
+    
+    public GameObject flameEndDown;
+
+    
+    public GameObject flameEndLeft;
+
+    
+    public GameObject flameEndRight;
+
     public LayerMask wall;
 
     public int maxNumBomb = 1;
@@ -16,12 +32,15 @@ public class NewPlayerScript : MonoBehaviour
 
     public int facingDirection;
 
+    public bool dead;
     
-
     public float delay = 2f;
 
     void Start()
     {
+
+        dead = false;
+
         movePoint.parent = null;
 
         ps = GetComponent<PlayerScript>();
@@ -42,8 +61,12 @@ public class NewPlayerScript : MonoBehaviour
                 delay = 2f;
             }
         }
-
         
+
+        if (dead == true)
+        {
+            Die();
+        }
 
         
 
@@ -93,7 +116,7 @@ public class NewPlayerScript : MonoBehaviour
             {
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3( h, 0f, 0f), 0.2f, wall))
                 {
-                    FindObjectOfType<AudioManager>().Play("walk");
+                    //FindObjectOfType<AudioManager>().Play("walk");
                     movePoint.position += new Vector3(h, 0f, 0f);
                 }
             } 
@@ -102,13 +125,31 @@ public class NewPlayerScript : MonoBehaviour
             {
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, v, 0f), 0.2f, wall))
                 {
-                    FindObjectOfType<AudioManager>().Play("walk");
+                    //FindObjectOfType<AudioManager>().Play("walk");
                     movePoint.position += new Vector3(0f, v, 0f);
                 }
 
             }
 
            
+        }
+    }
+
+    void Die()
+    {
+        ps.upHeld = false;
+        ps.downHeld = false;
+        ps.leftHeld = false;
+        ps.rightHeld = false;
+        print("die");
+        
+
+        deathCountdown -= Time.deltaTime;
+
+        if (deathCountdown <= 0)
+        {
+            
+            SceneManager.LoadScene("game");
         }
     }
     public void DropBomb()
@@ -127,7 +168,6 @@ public class NewPlayerScript : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("bomb place");
 
 
-            print("drop bomb");
         }
     }
 
@@ -167,4 +207,8 @@ public class NewPlayerScript : MonoBehaviour
         }
 
     }
+
+    
+
+
 }

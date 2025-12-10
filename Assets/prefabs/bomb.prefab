@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2726189089990810568}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11494, y: -0.62029, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,10 +107,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BombScript
   explosionTime: 4
   flamePrefab: {fileID: 5294983482816914000, guid: 95056f4da9041134e822507945831f44, type: 3}
-  flameEndUp: {fileID: 1681793128523475270, guid: 872ef05daf10d5b4cbb74bf1f9406c13, type: 3}
-  flameEndDown: {fileID: 788844362835472439, guid: d294c7c30c009624ba8875fc966a4a9f, type: 3}
-  flameEndLeft: {fileID: 2378568336813397885, guid: 5ec3e705d8a89304c8a4eb2236bcbe58, type: 3}
-  flameEndRight: {fileID: 970354311602946922, guid: 0d884093d2e39b84d85b453892db5814, type: 3}
+  flameEndUp: {fileID: 3342758187569790079, guid: 272fa96651baa2e478d1f1879c08e28f, type: 3}
+  flameEndDown: {fileID: 6644927815565668181, guid: 4b336aac2e0e00440aa50814cda0df41, type: 3}
+  flameEndLeft: {fileID: 8936591946517243027, guid: d529cfbf1d8c9e9458aab63c73d1138b, type: 3}
+  flameEndRight: {fileID: 5005540117907662228, guid: 52aa327211ff6e046821c58e05ebc407, type: 3}
   wall:
     serializedVersion: 2
     m_Bits: 8

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Explosion : MonoBehaviour
 {
@@ -18,6 +19,20 @@ public class Explosion : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<NewPlayerScript>().dead = true;
+            FindObjectOfType<AudioManager>().Play("death");
+            FindObjectOfType<AudioManager>().Stop("music");
+
+            
+        }
+
         
     }
 }

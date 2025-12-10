@@ -18,7 +18,7 @@ public class BombScript : MonoBehaviour
 
     void Start()
     {
-        explosionTime = 1;
+        explosionTime = 4;
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class BombScript : MonoBehaviour
 
         if (explosionTime < 0)
         {
-            print("explode");
+            
             explosionTime = 4f;
             Destroy(gameObject);
 
@@ -42,13 +42,17 @@ public class BombScript : MonoBehaviour
     {
         GameObject flame;
 
+        FindObjectOfType<AudioManager>().Play("bomb explode");
 
         Vector3 pos;
-        bool collision;
+        
         //left
         pos = transform.position + new Vector3(-1, 0, 0);
 
+       
+
         //check using raycast if there is an object at this point
+
 
         if (Physics2D.OverlapCircle(pos, 0.2f, wall) == false)
         {
@@ -56,25 +60,27 @@ public class BombScript : MonoBehaviour
 
             pos = transform.position + new Vector3(-2, 0, 0);
 
+
             if (Physics2D.OverlapCircle(pos, 0.2f, wall) == false)
             {
                 flame = Instantiate(flameEndLeft, pos, Quaternion.identity);
             }
         }
 
+    
         //right
 
         pos = transform.position + new Vector3(1, 0, 0);
 
         if (Physics2D.OverlapCircle(pos, 0.2f, wall) == false)
         {
-            flame = Instantiate(flameEndRight, pos, Quaternion.identity);
+            flame = Instantiate(flamePrefab, pos, Quaternion.identity);
 
             pos = transform.position + new Vector3(2, 0, 0);
 
             if (Physics2D.OverlapCircle(pos, 0.2f, wall) == false)
             {
-                flame = Instantiate(flamePrefab, pos, Quaternion.identity);
+                flame = Instantiate(flameEndRight, pos, Quaternion.identity);
             }
         }
 
@@ -109,6 +115,12 @@ public class BombScript : MonoBehaviour
                 flame = Instantiate(flameEndDown, pos, Quaternion.identity);
             }
         }
+
+
+        pos = transform.position + new Vector3(0, 0, 0);
+        flame = Instantiate(flamePrefab, pos, Quaternion.identity);
+
+        
     }
 
     
